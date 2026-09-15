@@ -1,0 +1,30 @@
+{{- define "main" }}
+
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  {{- if .Description }}
+  <div class="post-description">
+    {{ .Description | markdownify }}
+  </div>
+  {{- end }}
+</header>
+
+{{- $pages := .RegularPages.ByDate.Reverse }}
+
+<div class="blog-year-list">
+  {{- $year := "" }}
+  {{- range $pages }}
+  {{- $pageYear := .Date.Format "2006" }}
+  {{- if ne $pageYear $year }}
+  {{- $year = $pageYear }}
+  <h2 class="blog-year">{{ $year }}</h2>
+  {{- end }}
+  <a class="blog-year-entry" href="{{ .Permalink }}">
+    <span class="blog-year-entry-title">{{ .Title }}</span>
+    <span class="blog-year-entry-date">{{ .Date.Format "Jan 2" }}</span>
+  </a>
+  {{- end }}
+</div>
+
+{{- end }}{{- /* end main */ -}}

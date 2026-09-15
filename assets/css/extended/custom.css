@@ -38,3 +38,41 @@
 .profile .buttons a.button:not(:first-child):hover {
     background: var(--tertiary);
 }
+
+.blog-year-list {
+    margin-top: 1rem;
+}
+
+.blog-year {
+    font-size: 1.1rem;
+    color: var(--secondary);
+    margin: 2rem 0 0.5rem;
+}
+
+.blog-year-list .blog-year:first-child {
+    margin-top: 0;
+}
+
+.blog-year-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--primary);
+}
+
+.blog-year-entry:hover .blog-year-entry-title {
+    text-decoration: underline;
+}
+
+.blog-year-entry-title {
+    font-weight: 500;
+}
+
+.blog-year-entry-date {
+    color: var(--secondary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}

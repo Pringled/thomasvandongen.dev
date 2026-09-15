@@ -83,6 +83,10 @@ googleAnalytics = "G-FT1MZRFHXW"
       url = "/projects/"
 
     [[params.profileMode.buttons]]
+      name = "Blog"
+      url = "/blog/"
+
+    [[params.profileMode.buttons]]
       name = "About"
       url = "/about/"
 
@@ -102,15 +106,15 @@ googleAnalytics = "G-FT1MZRFHXW"
 
 # Menu (top-right)
 [[menu.main]]
-  identifier = "blog"
-  name = "Blog"
-  url = "/blog/"
-  weight = 5
-
-[[menu.main]]
   identifier = "projects"
   name = "Projects"
   url = "/projects/"
+  weight = 5
+
+[[menu.main]]
+  identifier = "blog"
+  name = "Blog"
+  url = "/blog/"
   weight = 10
 
 [[menu.main]]

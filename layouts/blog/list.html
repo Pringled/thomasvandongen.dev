@@ -17,6 +17,9 @@
   {{- range $pages }}
   {{- $pageYear := .Date.Format "2006" }}
   {{- if ne $pageYear $year }}
+  {{- if ne $year "" }}
+  <hr class="blog-year-divider">
+  {{- end }}
   {{- $year = $pageYear }}
   <h2 class="blog-year">{{ $year }}</h2>
   {{- end }}

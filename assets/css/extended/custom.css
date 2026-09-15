@@ -53,13 +53,18 @@
     margin-top: 0;
 }
 
+.blog-year-divider {
+    border: none;
+    border-top: 1px solid var(--primary);
+    margin: 2rem 0 0;
+}
+
 .blog-year-entry {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 1rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
+    padding: 0.4rem 0;
     color: var(--primary);
 }
 

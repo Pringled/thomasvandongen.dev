@@ -1,6 +1,6 @@
 baseURL = "https://thomasvd.dev/"
 languageCode = "en-us"
-title = "thomasvd.dev"
+title = "Thomas van Dongen"
 theme = "PaperMod"
 summaryLength = 0
 enableRobotsTXT = true

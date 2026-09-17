@@ -73,7 +73,7 @@ html[data-theme="dark"] .bg {
 
 /* --- PaperMod-ish dark code block polish (keeps Monokai token colors) --- */
 html[data-theme="dark"] {
-  --code-bg: #1f2228;          /* softer than monokai #272822 */
+  --code-bg: #1f1e23;          /* warm, matches theme */
   --code-border: rgba(255,255,255,0.10);
 }
 

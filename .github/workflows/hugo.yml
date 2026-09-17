@@ -5,6 +5,8 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
 
 permissions:
   contents: read
@@ -41,6 +43,12 @@ jobs:
         id: pages
         uses: actions/configure-pages@v4
       
+      - name: Fetch project stats
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PEPY_API_KEY: ${{ secrets.PEPY_API_KEY }}
+        run: pip install pyyaml && python scripts/fetch_stats.py
+
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production

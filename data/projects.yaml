@@ -1,0 +1,48 @@
+- name: Model2Vec
+  url: https://github.com/MinishLab/model2vec
+  repo: MinishLab/model2vec
+  pypi: model2vec
+  description: Distil any sentence transformer into a tiny, fast static embedding model.
+  featured: true
+- name: SemHash
+  url: https://github.com/MinishLab/semhash
+  repo: MinishLab/semhash
+  pypi: semhash
+  description: Semantic deduplication and dataset filtering across text, images, and audio.
+  featured: true
+- name: Semble
+  url: https://github.com/MinishLab/semble
+  repo: MinishLab/semble
+  pypi: semble
+  description: Code search for agents that uses ~99% fewer tokens than grep+read.
+  featured: true
+- name: Potion
+  url: https://huggingface.co/collections/minishlab/potion
+  description: Tiny state-of-the-art static embedding models for English, multilingual, code, and retrieval.
+  featured: true
+- name: Vicinity
+  url: https://github.com/MinishLab/vicinity
+  repo: MinishLab/vicinity
+  pypi: vicinity
+  description: Fast, lightweight nearest neighbor search with pluggable backends.
+- name: Pyversity
+  url: https://github.com/Pringled/pyversity
+  repo: Pringled/pyversity
+  pypi: pyversity
+  description: Diversify search and retrieval results to reduce redundancy and improve coverage.
+  featured: true
+- name: Agentcheck
+  url: https://github.com/Pringled/agentcheck
+  repo: Pringled/agentcheck
+  pypi: agentcheck
+  description: Scans your shell and reports what an AI agent could access, by severity.
+- name: Tokenlearn
+  url: https://github.com/MinishLab/tokenlearn
+  repo: MinishLab/tokenlearn
+  pypi: tokenlearn
+  description: Pre-train static embedding models for distillation pipelines.
+- name: Model2Vec-rs
+  url: https://github.com/MinishLab/model2vec-rs
+  repo: MinishLab/model2vec-rs
+  crate: model2vec
+  description: A Rust port of Model2Vec.

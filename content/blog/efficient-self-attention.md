@@ -5,18 +5,17 @@ draft: false
 tags: ["transformers", "attention", "efficient-attention", "nlp"]
 canonicalURL: "https://towardsdatascience.com/demystifying-efficient-self-attention-b3de61b9b0fb"
 math: true
+description: "A practical overview of efficient attention mechanisms"
 summary: "A practical overview of efficient attention mechanisms that tackle the quadratic scaling problem."
 ---
 
 <!--more-->
 
-*Originally published on [Towards Data Science](https://towardsdatascience.com/demystifying-efficient-self-attention-b3de61b9b0fb)*
-
-## A practical overview
+{{< note >}}Originally published on [Towards Data Science](https://towardsdatascience.com/demystifying-efficient-self-attention-b3de61b9b0fb){{< /note >}}
 
 ## Introduction
 
-The Transformer architecture [1] has been essential for some of the biggest breakthroughs in deep learning in recent years. Especially in the field of Natural Language Processing (NLP), pre-trained autoencoding models (like BERT [2]) and autoregressive models (like GPT-3 [3]) have continuously managed to outperform the state-of-the-art and reach human-like levels of text generation. One of the most important innovations of the Transformer is the use of attention layers as its main way of routing information.
+The Transformer architecture [[1]](#ref-1) has been essential for some of the biggest breakthroughs in deep learning in recent years. Especially in the field of Natural Language Processing (NLP), pre-trained autoencoding models (like BERT [[2]](#ref-2)) and autoregressive models (like GPT-3 [[3]](#ref-3)) have continuously managed to outperform the state-of-the-art and reach human-like levels of text generation. One of the most important innovations of the Transformer is the use of attention layers as its main way of routing information.
 
 As the name suggests, the goal of attention is to allow the model to focus on important parts of the input. This makes sense from a human perspective: when we look at an input (e.g. an image or a text), some parts are more important for our understanding than others. We can relate certain parts of the input to each other and understand long-range context. These are all essential for our understanding and attention mechanisms allow Transformer models to learn in a similar way. While this has proven to be extremely effective, there is a practical problem with attention mechanisms: they scale quadratically with respect to the input length. Fortunately, there is a lot of research dedicated to making attention more efficient.
 
@@ -26,7 +25,7 @@ This blog post aims to provide a comprehensive overview of the different types o
 
 Before diving into the specific methods, let's first go over the basics of self-attention mechanisms and define some terms that will be reused throughout this blog post.
 
-Self-attention is a specific type of attention. The difference between regular attention and self-attention is that instead of relating an input to an output sequence, self-attention focuses on a single sequence. It allows the model to let a sequence learn information about itself. For example, let's take the sentence "The man walked to the river bank, and he ate a sandwich". In contrast to previous embedding methods, such as TF-IDF and word2vec [4], self-attention allows the model to learn that a "river bank" is different from a "financial bank" (context-dependent). Furthermore, it allows the model to learn that "he" refers to "the man" (can learn dependencies).
+Self-attention is a specific type of attention. The difference between regular attention and self-attention is that instead of relating an input to an output sequence, self-attention focuses on a single sequence. It allows the model to let a sequence learn information about itself. For example, let's take the sentence "The man walked to the river bank, and he ate a sandwich". In contrast to previous embedding methods, such as TF-IDF and word2vec [[4]](#ref-4), self-attention allows the model to learn that a "river bank" is different from a "financial bank" (context-dependent). Furthermore, it allows the model to learn that "he" refers to "the man" (can learn dependencies).
 
 Suppose we have a sequence $\mathbf{x}$ of length $n$. Every element in $\mathbf{x}$ is represented by a $d$-dimensional vector. In the case of NLP, $\mathbf{x}$ would be the word embeddings for a sentence. $\mathbf{x}$ is projected through three (trained) weight matrices $\mathbf{W}_Q$, $\mathbf{W}_K$, and $\mathbf{W}_V$, outputting three matrices: $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$, all of dimensions $n \times d$. Self-attention can then be defined as the following general formula:
 
@@ -34,7 +33,7 @@ $$
 \text{Attention}(Q, K, V) = \text{Score}(Q, K)V
 $$
 
-The most commonly used score function is the softmax. Taking the softmax and applying a scaling factor leads to scaled-dot product attention (SDP), as proposed in [1]:
+The most commonly used score function is the softmax. Taking the softmax and applying a scaling factor leads to scaled-dot product attention (SDP), as proposed in [[1]](#ref-1):
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
@@ -93,14 +92,14 @@ In random attention, tokens only attend to random other tokens. The complexity d
 
 ### Sparse Transformer — O(n√n)
 
-The sparse transformer [5] was one of the first attempts to reduce the complexity of self-attention. The authors propose two sparse attention patterns: strided attention and fixed attention, which both reduce the complexity to $O(n\sqrt{n})$. Their two attention types can be defined using specific attention patterns. Strided attention is similar to local attention with a stride, which the authors argue is important for learning from data with a periodic structure, like images or music. However, for data without a periodic structure (like text), this pattern can fail to route information to distant items. Fixed attention is a solution for this. It lets some items attend to the entire column and create a "summary" that is propagated to other items.
+The sparse transformer [[5]](#ref-5) was one of the first attempts to reduce the complexity of self-attention. The authors propose two sparse attention patterns: strided attention and fixed attention, which both reduce the complexity to $O(n\sqrt{n})$. Their two attention types can be defined using specific attention patterns. Strided attention is similar to local attention with a stride, which the authors argue is important for learning from data with a periodic structure, like images or music. However, for data without a periodic structure (like text), this pattern can fail to route information to distant items. Fixed attention is a solution for this. It lets some items attend to the entire column and create a "summary" that is propagated to other items.
 
 ![Figure 3: Strided attention (left) and fixed attention (right)](/images/blog/attention-sparse-strided-fixed.webp)
 *Figure 3: Strided attention (left) and fixed attention (right).*
 
 ### Longformer — O(n)
 
-Longformer [6] uses a combination of sliding (or local), dilated sliding, and global attention. Dilated sliding attention is based on the idea of dilated CNNs. The goal of dilated sliding attention is to gradually increase the receptive field for every layer. The authors propose to use local attention in lower-level layers with a small window $W$ (which can be seen as dilated sliding window attention with a gap $d$ of 0) and increase $W$ and $d$ in higher-level layers.
+Longformer [[6]](#ref-6) uses a combination of sliding (or local), dilated sliding, and global attention. Dilated sliding attention is based on the idea of dilated CNNs. The goal of dilated sliding attention is to gradually increase the receptive field for every layer. The authors propose to use local attention in lower-level layers with a small window $W$ (which can be seen as dilated sliding window attention with a gap $d$ of 0) and increase $W$ and $d$ in higher-level layers.
 
 Global attention is only added for specific tokens $s$. The choice of which tokens to make global is up to the user. A logical choice for classification is to make the [CLS] token global, while for QA tasks all question mark tokens can be made global. The complexity of their algorithm is $(n \cdot W + s \cdot n)$, which scales linearly w.r.t. the sequence length $n$ and is thus simplified as $O(n)$.
 
@@ -115,7 +114,7 @@ In matrix factorization (or decomposition) methods, the matrix $\mathbf{P}$ is a
 
 ### Linformer — O(n)
 
-The authors of Linformer [7] propose the use of low-rank factorization of the attention matrix to reach a complexity of $O(n)$. The authors first empirically show that $\mathbf{A}$ can be recovered from its first few largest singular values when applying singular value decomposition (SVD), suggesting that it is low-rank. Then, they prove that $\mathbf{A}$ can be approximated as a low-rank matrix $\tilde{\mathbf{A}}$ with very low error using the Johnson-Lindenstraus lemma (JL), which states:
+The authors of Linformer [[7]](#ref-7) propose the use of low-rank factorization of the attention matrix to reach a complexity of $O(n)$. The authors first empirically show that $\mathbf{A}$ can be recovered from its first few largest singular values when applying singular value decomposition (SVD), suggesting that it is low-rank. Then, they prove that $\mathbf{A}$ can be approximated as a low-rank matrix $\tilde{\mathbf{A}}$ with very low error using the Johnson-Lindenstraus lemma (JL), which states:
 
 > A set of points in high-dimensional space can be projected into a low-dimensional space while (nearly) preserving the distances between points.
 
@@ -138,7 +137,7 @@ The last step is choosing the value of $k$. The authors show that a value of $d 
 
 ### Nyströmformer — O(n)
 
-Nyströmformer [8] uses the Nyström method to approximate the self-attention matrix. The idea is to rewrite the matrix $\mathbf{P}$ as a matrix of four parts: $\mathbf{B}$ (which is $m \times m$, where $m$ is some number $< n$), $\mathbf{C}$, $\mathbf{D}$, and $\mathbf{E}$.
+Nyströmformer [[8]](#ref-8) uses the Nyström method to approximate the self-attention matrix. The idea is to rewrite the matrix $\mathbf{P}$ as a matrix of four parts: $\mathbf{B}$ (which is $m \times m$, where $m$ is some number $< n$), $\mathbf{C}$, $\mathbf{D}$, and $\mathbf{E}$.
 
 ![Figure 6: Explanation of the Nyström method for matrix approximation](/images/blog/attention-nystrom-decomposition.webp)
 *Figure 6: Explanation of the Nyström method for matrix approximation.*
@@ -168,7 +167,7 @@ Locality-sensitive hashing (LSH) is a technique that can be used for efficient a
 
 ### Reformer — O(n log n)
 
-The authors of Reformer [9] were the first to propose the use of LSH for efficient self-attention. They note that, since the softmax is dominated by the largest elements, for each query $\mathbf{q}_i$ in $\mathbf{Q}$, $\mathbf{q}_i$ only needs to focus on the keys in $\mathbf{K}$ that are closest to $\mathbf{q}_i$ (or in the same hash bucket).
+The authors of Reformer [[9]](#ref-9) were the first to propose the use of LSH for efficient self-attention. They note that, since the softmax is dominated by the largest elements, for each query $\mathbf{q}_i$ in $\mathbf{Q}$, $\mathbf{q}_i$ only needs to focus on the keys in $\mathbf{K}$ that are closest to $\mathbf{q}_i$ (or in the same hash bucket).
 
 To better understand how this works, let's go through an example. Imagine we have a 2-d space with a number of points. In the case of self-attention, these points would be the items in $\mathbf{P}$. The colors represent points that are close together. To divide the items into hash buckets, a number of random hyperplanes are drawn through the origin. Any hyperplane has a positive side (1) and a negative side (0). Items are then placed into hash buckets based on which side they appear on w.r.t. each hyperplane. The number of hash buckets is thus defined by the number of drawn hyperplanes. After doing this, items only have to compute the distance to items within their own hash bucket (or, in the context of self-attention, attend to items within the same hash bucket).
 
@@ -177,7 +176,7 @@ To better understand how this works, let's go through an example. Imagine we hav
 
 As can be seen in the resulting hash buckets, it is possible that items that are close together still end up in different hash buckets. To mitigate this, it's possible to perform multiple rounds of hashing and assign every value to the hash that it ends up in most often. This does, however, increase the complexity of the algorithm. The authors show that with 8 rounds of hashing the model reaches a performance that's similar to a global-attention model.
 
-The authors use a variant called angular LSH [10], which uses the cosine distance to compute the distance between any two points. They show that, with a high probability, two points that are close together end up in the same bucket.
+The authors use a variant called angular LSH [[10]](#ref-10), which uses the cosine distance to compute the distance between any two points. They show that, with a high probability, two points that are close together end up in the same bucket.
 
 After dividing the points into buckets, the points are sorted by bucket. However, some buckets might be bigger than others. The largest bucket will still dominate the memory requirements, which is an issue. For this reason, the authors chunk the buckets into fixed chunks, so that the memory requirements are dependent on the chunk size. Note that it is possible that items do not end up in the same chunk as the other items within their bucket. The items can attend to all the items in the chunk that they should have ended up in, but can not be attended to themselves (which adds a small constant cost to the complexity).
 
@@ -192,14 +191,14 @@ A kernel is a function that takes as input the dot product of two vectors $\math
 
 ### Performer — O(n)
 
-The Performer [11] is based on a mechanism called _fast attention via positive orthogonal random features_ (or FAVOR+). The idea is that we can use the kernel method to approximate the softmax function.
+The Performer [[11]](#ref-11) is based on a mechanism called _fast attention via positive orthogonal random features_ (or FAVOR+). The idea is that we can use the kernel method to approximate the softmax function.
 
 Usually, when applying the kernel method we want to compute the dot product in a higher dimensional space. This can be achieved using the appropriate kernel function $K$ (as we do in kernel SVM for example). However, the Performer does the reverse: we already know what our function $K$ is (the non-linear softmax) and we want to find $\phi$ so that we can compute $\phi(\mathbf{x})^\top\phi(\mathbf{y})$ (which is linear). We can visualize this method: instead of computing the $L \times L$ matrix $\mathbf{A}$ multiplied by $\mathbf{V}$ (note that this is just the formula $\mathrm{softmax}(\mathbf{Q}\mathbf{K}^\top)\mathbf{V}$), the method uses $\phi$ to compute $\phi(\mathbf{Q}) = \mathbf{Q}'$ and $\phi(\mathbf{K}) = \mathbf{K}'$ directly which allows us to multiply $\mathbf{K}$ and $\mathbf{V}$ first, and avoids the costly computation of matrix $\mathbf{A}$.
 
 ![Figure 10: Explanation of FAVOR+ Attention](/images/blog/attention-performer.webp)
 *Figure 10: Explanation of FAVOR+ Attention.*
 
-The main research question becomes: how do we find $\phi$? The idea is based on random Fourier features [12]. The authors indicate that most kernels can be modeled using a general function. The authors prove that the Softmax kernel can be approximated by choosing specific functions.
+The main research question becomes: how do we find $\phi$? The idea is based on random Fourier features [[12]](#ref-12). The authors indicate that most kernels can be modeled using a general function. The authors prove that the Softmax kernel can be approximated by choosing specific functions.
 
 There is still one problem, however. Unlike a softmax, sin and cos can have negative values, which causes the variance of the approximation to become high when the actual value of the softmax would be close to 0. Since many self-attention values are close to 0, this is a problem. For this reason, the authors propose the use of different functions which only output positive values (hence the positive part in FAVOR+):
 
@@ -211,11 +210,11 @@ Lastly, the authors explain that making sure the $\omega$s are orthogonal leads 
 
 ## Alternatives to self-attention
 
-Clearly, there is a lot of research dedicated to making scaled-dot product attention more efficient. There is, however, another alternative: not using self-attention at all, but instead using a simpler approach to share information between our tokens. This idea has been proposed in multiple papers recently ([13], [14], [15]). We will discuss one, as the general idea is very similar for all of these papers.
+Clearly, there is a lot of research dedicated to making scaled-dot product attention more efficient. There is, however, another alternative: not using self-attention at all, but instead using a simpler approach to share information between our tokens. This idea has been proposed in multiple papers recently ([[13]](#ref-13), [[14]](#ref-14), [[15]](#ref-15)). We will discuss one, as the general idea is very similar for all of these papers.
 
 ### FNet — O(n)
 
-FNet [15] is an alternative Transformer architecture that completely replaces self-attention blocks with the discrete Fourier transform (DFT). Consequently, there are no learnable parameters anymore except for the feedforward layers. The DFT decomposes a signal into its constituent frequencies. When $N$ is infinite, we can exactly create the original signal. In the context of NLP, our signal is a sequence of tokens. Effectively, every component $n$ contains some information about every token in the input sequence.
+FNet [[15]](#ref-15) is an alternative Transformer architecture that completely replaces self-attention blocks with the discrete Fourier transform (DFT). Consequently, there are no learnable parameters anymore except for the feedforward layers. The DFT decomposes a signal into its constituent frequencies. When $N$ is infinite, we can exactly create the original signal. In the context of NLP, our signal is a sequence of tokens. Effectively, every component $n$ contains some information about every token in the input sequence.
 
 What's interesting about their method is not so much the fact that they use DFT, but rather that they apply a linear transformation to mix their tokens. They also tried a linear encoder, which is very similar to how synthesizer models work, and even a completely random encoder. While the linear encoder has a slightly higher performance, it has learnable parameters, making it slower than FNet. BERT-Base still has a substantially higher average score on GLUE, but they report a training time speedup of ~7x. Since there are many possible linear transformations, there is an interesting open research question on what is the most suitable one for Transformers.
 
@@ -233,7 +232,7 @@ While all the papers discussed in this post report their theoretical complexitie
 ![Figure 12: Memory use and runtime usage for short sequence lengths](/images/blog/attention-complexity-comparison.webp)
 *Figure 12: Memory use and runtime usage for short sequence lengths for various efficient attention methods.*
 
-Clearly, all methods are significantly more efficient than SDP for longer sequences. While all of the attention mechanisms compared here (except for SDP) scale linearly w.r.t the sequence length, it is interesting to see that there are still noticeable differences between the mechanisms due to constants and other scaling factors. Notably, Linformer does not scale as well as the other methods. Another interesting result is the memory usage and runtime of Nyströmformer. While it scales very well, as can be seen in the graphs for sequence lengths (512, 1024, 2048), it is actually the most inefficient method for short sequences (128 and 256). This is likely due to the number of selected landmarks, which was kept at a value of 64 as suggested in [8].
+Clearly, all methods are significantly more efficient than SDP for longer sequences. While all of the attention mechanisms compared here (except for SDP) scale linearly w.r.t the sequence length, it is interesting to see that there are still noticeable differences between the mechanisms due to constants and other scaling factors. Notably, Linformer does not scale as well as the other methods. Another interesting result is the memory usage and runtime of Nyströmformer. While it scales very well, as can be seen in the graphs for sequence lengths (512, 1024, 2048), it is actually the most inefficient method for short sequences (128 and 256). This is likely due to the number of selected landmarks, which was kept at a value of 64 as suggested in [[8]](#ref-8).
 
 It is interesting to see that SDP performs very similarly to the other methods for sequence lengths up to 512. The only method that is notably more efficient than any other method is FNet (Fourier mix attention). It is almost completely independent of the sequence length while having no significant constants to consider.
 
@@ -243,18 +242,18 @@ Efficient self-attention is still an active area of research, given the ever-inc
 
 ## References
 
-1. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., & Polosukhin, I. *Attention is All You Need* (2017).
-2. Devlin, J., Chang, M., Lee, K., & Toutanova, K. *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding* (2018).
-3. Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., et al. *Language Models are Few-Shot Learners* (2020).
-4. Mikolov, T., Chen, K., Corrado, G., & Dean, J. *Efficient Estimation of Word Representations in Vector Space* (2013).
-5. Child, R., Gray, S., Radford, A., & Sutskever, I. *Generating Long Sequences with Sparse Transformers* (2019).
-6. Beltagy, I., Peters, M. E., & Cohan, A. *Longformer: The Long-Document Transformer* (2020).
-7. Wang, S., Li, B. Z., Khabsa, M., Fang, H., & Ma, H. *Linformer: Self-Attention with Linear Complexity* (2020).
-8. Xiong, Y., Zeng, Z., Chakraborty, R., Tan, M., Fung, G., Li, Y., & Singh, V. *Nyströmformer: A Nyström-Based Algorithm for Approximating Self-Attention* (2021).
-9. Kitaev, N., Kaiser, Ł., & Levskaya, A. *Reformer: The Efficient Transformer* (2020).
-10. Andoni, A., Indyk, P., Laarhoven, T., Razenshteyn, I., & Schmidt, L. *Practical and Optimal LSH for Angular Distance* (2015).
-11. Choromanski, K., Likhosherstov, V., Dohan, D., Song, X., Gane, A., Sarlos, T., et al. *Rethinking Attention with Performers* (2020).
-12. Rahimi, A., & Recht, B. *Random Features for Large-Scale Kernel Machines* (2007).
-13. Tay, Y., Bahri, D., Metzler, D., Juan, D., Zhao, Z., & Zheng, C. *Synthesizer: Rethinking Self-Attention in Transformer Models* (2020).
-14. Tolstikhin, I., Houlsby, N., Kolesnikov, A., Beyer, L., Zhai, X., Unterthiner, T., et al. *MLP-Mixer: An all-MLP Architecture for Vision* (2021).
-15. Ainslie, J., Eckstein, I., & Ontañón, S. *FNet: Mixing Tokens with Fourier Transforms* (2021).
+1. {{< ref 1 >}}Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., & Polosukhin, I. [*Attention is All You Need*](https://arxiv.org/abs/1706.03762) (2017).
+2. {{< ref 2 >}}Devlin, J., Chang, M., Lee, K., & Toutanova, K. [*BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*](https://arxiv.org/abs/1810.04805) (2018).
+3. {{< ref 3 >}}Brown, T. B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., et al. [*Language Models are Few-Shot Learners*](https://arxiv.org/abs/2005.14165) (2020).
+4. {{< ref 4 >}}Mikolov, T., Chen, K., Corrado, G., & Dean, J. [*Efficient Estimation of Word Representations in Vector Space*](https://arxiv.org/abs/1301.3781) (2013).
+5. {{< ref 5 >}}Child, R., Gray, S., Radford, A., & Sutskever, I. [*Generating Long Sequences with Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019).
+6. {{< ref 6 >}}Beltagy, I., Peters, M. E., & Cohan, A. [*Longformer: The Long-Document Transformer*](https://arxiv.org/abs/2004.05150) (2020).
+7. {{< ref 7 >}}Wang, S., Li, B. Z., Khabsa, M., Fang, H., & Ma, H. [*Linformer: Self-Attention with Linear Complexity*](https://arxiv.org/abs/2006.04768) (2020).
+8. {{< ref 8 >}}Xiong, Y., Zeng, Z., Chakraborty, R., Tan, M., Fung, G., Li, Y., & Singh, V. [*Nyströmformer: A Nyström-Based Algorithm for Approximating Self-Attention*](https://arxiv.org/abs/2102.03902) (2021).
+9. {{< ref 9 >}}Kitaev, N., Kaiser, Ł., & Levskaya, A. [*Reformer: The Efficient Transformer*](https://arxiv.org/abs/2001.04451) (2020).
+10. {{< ref 10 >}}Andoni, A., Indyk, P., Laarhoven, T., Razenshteyn, I., & Schmidt, L. [*Practical and Optimal LSH for Angular Distance*](https://arxiv.org/abs/1509.02897) (2015).
+11. {{< ref 11 >}}Choromanski, K., Likhosherstov, V., Dohan, D., Song, X., Gane, A., Sarlos, T., et al. [*Rethinking Attention with Performers*](https://arxiv.org/abs/2009.14794) (2020).
+12. {{< ref 12 >}}Rahimi, A., & Recht, B. [*Random Features for Large-Scale Kernel Machines*](https://proceedings.neurips.cc/paper/2007/hash/013a006f03dbc5392effeb8f18fda755-Abstract.html) (2007).
+13. {{< ref 13 >}}Tay, Y., Bahri, D., Metzler, D., Juan, D., Zhao, Z., & Zheng, C. [*Synthesizer: Rethinking Self-Attention in Transformer Models*](https://arxiv.org/abs/2005.00743) (2020).
+14. {{< ref 14 >}}Tolstikhin, I., Houlsby, N., Kolesnikov, A., Beyer, L., Zhai, X., Unterthiner, T., et al. [*MLP-Mixer: An all-MLP Architecture for Vision*](https://arxiv.org/abs/2105.01601) (2021).
+15. {{< ref 15 >}}Ainslie, J., Eckstein, I., & Ontañón, S. [*FNet: Mixing Tokens with Fourier Transforms*](https://arxiv.org/abs/2105.03824) (2021).

@@ -67,28 +67,6 @@ googleAnalytics = "G-FT1MZRFHXW"
     name = "email"
     url = "mailto:thomasvdongen@proton.me"
 
-  # Homepage: Profile mode
-  [params.profileMode]
-    enabled = true
-    title = "Thomas van Dongen"
-    subtitle = "Building production ML systems for embeddings, retrieval, and language models."
-    credentials = "Head of AI Engineering at Springer Nature. Co-founder of Minish, an open-source ML lab."
-    imageUrl = "/avatar.jpg"
-    imageTitle = "Thomas van Dongen"
-    imageWidth = 120
-    imageHeight = 120
-
-    [[params.profileMode.buttons]]
-      name = "Projects"
-      url = "/projects/"
-
-    [[params.profileMode.buttons]]
-      name = "Blog"
-      url = "/blog/"
-
-    [[params.profileMode.buttons]]
-      name = "About"
-      url = "/about/"
 
   # Assets / highlighting
   [params.assets]
@@ -123,8 +101,3 @@ googleAnalytics = "G-FT1MZRFHXW"
   url = "/about/"
   weight = 30
 
-[[menu.main]]
-  identifier = "cv"
-  name = "CV"
-  url = "/cv/"
-  weight = 40

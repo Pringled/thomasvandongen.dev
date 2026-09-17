@@ -1,0 +1,7 @@
+{{- if ge . 1000000 -}}
+{{- printf "%.1fM" (div . 1000000.0) | replaceRE "\\.0M$" "M" -}}
+{{- else if ge . 1000 -}}
+{{- printf "%.1fk" (div . 1000.0) | replaceRE "\\.0k$" "k" -}}
+{{- else -}}
+{{- . -}}
+{{- end -}}

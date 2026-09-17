@@ -9,9 +9,7 @@ summary: "Distill small, fast static models from any Sentence Transformer withou
 
 <!--more-->
 
-*Originally published on [Hugging Face](https://huggingface.co/blog/Pringled/model2vec)*
-
-*Co-authored with [Stéphan Tulkens](https://github.com/stephantul)*
+{{< note >}}Originally published on [Hugging Face](https://huggingface.co/blog/Pringled/model2vec) · Co-authored with [Stéphan Tulkens](https://github.com/stephantul){{< /note >}}
 
 (Large) language models have become the de facto standard for feature extraction. While these models have shown state-of-the-art performance on a [large number of tasks](https://huggingface.co/spaces/mteb/leaderboard) they also come with heavy resource requirements: large energy consumption, computational demands, and longer processing times. Although there are many ways in which you can make existing (Sentence) Transformers faster, e.g. quantization, or specialized kernels, they are still relatively slow, especially on CPU. What if you need to go faster and are working on a time-constrained product (e.g. a search engine), or have very little resources available?
 

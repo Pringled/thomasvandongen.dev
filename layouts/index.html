@@ -1,0 +1,39 @@
+{{- define "main" }}
+<div class="home">
+  <header class="home-header">
+    <img class="home-avatar" src="/avatar.jpg" alt="Thomas van Dongen" width="88" height="88" draggable="false">
+    <div class="home-header-text">
+      <h1>Thomas van Dongen</h1>
+      <p class="home-role">Head of AI Engineering at <a href="https://link.springer.com/">Springer Nature</a> · Co-founder of <a href="https://minish.ai">Minish</a></p>
+      {{- partial "social_icons.html" -}}
+    </div>
+  </header>
+
+  <div class="home-intro">
+    {{ .Content }}
+  </div>
+
+  <section class="home-section">
+    <div class="home-section-header">
+      <h2>Open source</h2>
+      <a href="/projects/">All projects →</a>
+    </div>
+    {{- partial "project_list.html" (where site.Data.projects "featured" true) }}
+  </section>
+
+  <section class="home-section">
+    <div class="home-section-header">
+      <h2>Writing</h2>
+      <a href="/blog/">All posts →</a>
+    </div>
+    <div class="blog-year-list">
+      {{- range first 3 (where site.RegularPages "Section" "blog").ByDate.Reverse }}
+      <a class="blog-year-entry" href="{{ .Permalink }}">
+        <span class="blog-year-entry-title">{{ .Title }}</span>
+        <span class="blog-year-entry-date">{{ .Date.Format "Jan 2006" }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+</div>
+{{- end }}

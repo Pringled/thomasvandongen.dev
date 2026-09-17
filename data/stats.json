@@ -1,0 +1,34 @@
+{
+  "Model2Vec": {
+    "stars": 2209,
+    "downloads": 6902739
+  },
+  "SemHash": {
+    "stars": 966,
+    "downloads": 873259
+  },
+  "Semble": {
+    "stars": 6100,
+    "downloads": 549778
+  },
+  "Vicinity": {
+    "stars": 351,
+    "downloads": 1246398
+  },
+  "Pyversity": {
+    "stars": 499,
+    "downloads": 537636
+  },
+  "Agentcheck": {
+    "stars": 28,
+    "downloads": 2339
+  },
+  "Tokenlearn": {
+    "stars": 111,
+    "downloads": 8237
+  },
+  "Model2Vec-rs": {
+    "stars": 214,
+    "downloads": 4987
+  }
+}

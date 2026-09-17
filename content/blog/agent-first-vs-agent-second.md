@@ -1,5 +1,5 @@
 ---
-title: "Agent-first vs agent-second engineering"
+title: "Agent-First vs Agent-Second Engineering"
 date: 2026-09-15
 draft: false
 tags: ["engineering", "agents", "ai"]

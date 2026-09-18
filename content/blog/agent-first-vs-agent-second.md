@@ -23,7 +23,7 @@ These are the kind of things that are hard to describe in a prompt, unless you'r
 
 ## The case for agent-second
 
-After reading [this blog](https://kennethreitz.org/essays/2026-04-12-write_it_first_then_let_ai_drive) by Kenneth Reitz I got inspired to flip the approach around and start with the code myself (again). As Reitz puts it: "**a hand-written codebase is a style guide written in code itself**". If you write the first module, the first couple of functions and the first test, the agent has something concrete to imitate, and when you review its code you're checking it against _your_ standard rather than one that just emerged.
+After reading [this blog](https://kennethreitz.org/essays/2026-04-12-write_it_first_then_let_ai_drive) by Kenneth Reitz I got inspired to flip the approach around and start with the code myself (again). As Reitz puts it: "a hand-written codebase is a style guide written in code itself". If you write the first module, the first couple of functions and the first test, the agent has something concrete to imitate, and when you review its code you're checking it against _your_ standard rather than one that just emerged.
 
 The style guide doesn't even have to live in the same repo: I've had reasonable success by pointing agents at existing projects of mine, which is arguably a form of agent-second. This does assume that A) you have existing projects that are actually good enough to serve as a template, and B) those projects resemble whatever you're building closely enough to work as one.
 

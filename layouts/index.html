@@ -26,14 +26,17 @@
       <h2>Writing</h2>
       <a href="/blog/">All posts →</a>
     </div>
-    <div class="blog-year-list">
+    <ul class="project-list">
       {{- range first 3 (where site.RegularPages "Section" "blog").ByDate.Reverse }}
-      <a class="blog-year-entry" href="{{ .Permalink }}">
-        <span class="blog-year-entry-title">{{ .Title }}</span>
-        <span class="blog-year-entry-date">{{ .Date.Format "Jan 2006" }}</span>
-      </a>
+      <li class="project-row">
+        <div class="project-text">
+          <a class="project-name" href="{{ .Permalink }}">{{ .Title }}</a>
+          {{- with .Summary }}<span class="project-desc">{{ . | plainify }}</span>{{ end }}
+        </div>
+        <span class="project-stats">{{ .Date.Format "Jan 2006" }}</span>
+      </li>
       {{- end }}
-    </div>
+    </ul>
   </section>
 </div>
 {{- end }}

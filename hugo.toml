@@ -32,6 +32,9 @@ googleAnalytics = "G-FT1MZRFHXW"
   [params.social]
     twitter = "thomas_v_dongen"
 
+  [params.schema]
+    publisherType = "Person"
+
   # Theme behavior
   defaultTheme = "auto"
   disableThemeToggle = false
@@ -53,7 +56,7 @@ googleAnalytics = "G-FT1MZRFHXW"
 
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://linkedin.com/in/thomas-van-dongen"
+    url = "https://www.linkedin.com/in/thomas-van-dongen/"
 
   [[params.socialIcons]]
     name = "x"

@@ -30,7 +30,6 @@
   repo: Pringled/pi-extensions
   npm: [pi-polish, pi-context-bar, pi-background, pi-checkpoints, pi-feedback, pi-model-pick, pi-next-prompt, pi-away, pi-heads-up]
   description: Minimal extensions that make the Pi coding agent nicer to use.
-  featured: true
 - name: Pyversity
   url: https://github.com/Pringled/pyversity
   repo: Pringled/pyversity

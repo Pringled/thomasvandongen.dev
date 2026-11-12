@@ -42,6 +42,11 @@ def crate_downloads(crate):
     return get(f"https://crates.io/api/v1/crates/{crate}")["crate"]["downloads"]
 
 
+def npm_downloads(packages):
+    today = time.strftime("%Y-%m-%d")
+    return sum(get(f"https://api.npmjs.org/downloads/point/2025-01-01:{today}/{p}").get("downloads", 0) for p in packages)
+
+
 def main():
     projects = yaml.safe_load((ROOT / "data" / "projects.yaml").read_text())
     stats_path = ROOT / "data" / "stats.json"
@@ -54,6 +59,8 @@ def main():
             downloads = None
             if pypi := project.get("pypi"):
                 downloads = pypi_downloads(pypi)
+            elif npm := project.get("npm"):
+                downloads = npm_downloads(npm)
             elif crate := project.get("crate"):
                 downloads = crate_downloads(crate)
             if downloads is not None:
